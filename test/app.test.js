@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { fixture, expect } from '@open-wc/testing';
 
-import '../src/ing-frontend-assignment.js';
+import '../src/app.js';
 
 describe('IngFrontendAssignment', () => {
   let element;
