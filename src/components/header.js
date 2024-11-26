@@ -4,8 +4,10 @@ class Header extends LitElement {
   static styles = css`
     :host {
       width: 100%;
-      background-color: grey;
+      background: linear-gradient(to bottom, #2c0a4c, #450d80);
       height: 50px;
+      border-bottom-right-radius: 12px;
+      border-bottom-left-radius: 12px;
 
       display: flex;
       justify-content: center;

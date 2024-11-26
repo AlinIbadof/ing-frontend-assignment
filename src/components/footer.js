@@ -4,10 +4,12 @@ class Footer extends LitElement {
   static styles = css`
     :host {
       width: 100%;
-      background-color: grey;
+      background: linear-gradient(to top, #2c0a4c, #450d80);
       position: absolute;
       bottom: 0;
       height: 50px;
+      border-top-right-radius: 12px;
+      border-top-left-radius: 12px;
 
       display: flex;
       justify-content: center;
