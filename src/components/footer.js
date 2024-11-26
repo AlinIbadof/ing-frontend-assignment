@@ -4,6 +4,14 @@ class Footer extends LitElement {
   static styles = css`
     :host {
       width: 100%;
+      background-color: grey;
+      position: absolute;
+      bottom: 0;
+      height: 50px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   `;
 
