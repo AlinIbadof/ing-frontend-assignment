@@ -115,7 +115,7 @@ class Authentication extends LitElement {
                       to register.
                     `}
               </p>
-              <p></p>`}
+              <p>${this.errorMessage}</p>`}
       </main>
     `;
   }
