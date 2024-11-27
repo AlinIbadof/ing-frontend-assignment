@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import '@lion/ui/define/lion-input.js';
 import '@lion/ui/define/lion-button.js';
+import '@lion/ui/define/lion-switch.js';
 
 class Authentication extends LitElement {
   static styles = css`
@@ -33,6 +34,15 @@ class Authentication extends LitElement {
     lion-button {
       margin-top: 0.5rem;
     }
+
+    lion-switch {
+      margin: 0.75rem 0 0.75rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      gap: 5px;
+    }
   `;
 
   static properties = {
@@ -48,6 +58,7 @@ class Authentication extends LitElement {
     this.isRegisterScreen = false;
     this.username = '';
     this.errorMessage = '';
+    this.agreedToTerms = false;
   }
 
   _toggleRegister() {
@@ -62,6 +73,11 @@ class Authentication extends LitElement {
 
     if (!username || !password) {
       this.errorMessage = 'All fields are required.';
+      return;
+    }
+
+    if (this.isRegisterScreen && !this.agreedToTerms) {
+      this.errorMessage = 'Please agree to terms';
       return;
     }
 
@@ -84,6 +100,10 @@ class Authentication extends LitElement {
     this.isLoggedIn = false;
     this.username = '';
     this.password = '';
+  }
+
+  _toggleAgreeToTerms() {
+    this.agreedToTerms = !this.agreedToTerms;
   }
 
   render() {
@@ -114,6 +134,15 @@ class Authentication extends LitElement {
                     this.password = e.target.modelValue;
                   }}"
                 ></lion-input>
+
+                ${this.isRegisterScreen
+                  ? html`<lion-switch
+                      label="I agree to all terms"
+                      @model-value-changed="${e => {
+                        this.agreedToTerms = e.target.checked;
+                      }}"
+                    ></lion-switch>`
+                  : html``}
                 <lion-button @click="${this._handleSubmit}">Submit</lion-button>
               </form>
               <p>
