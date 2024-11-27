@@ -12,6 +12,7 @@ As for the features of the project:
 - Login and Registration;
 - Terms agreement for the registration part as I wanted to use and try more of the Lion UI components, and it seemed like a good fit;
 - Storage of users - used LocalStorage for this.
+- Testing of Authentication features.
 
 
 ## What I learned
