@@ -80,12 +80,18 @@ class Authentication extends LitElement {
     }
   }
 
+  _handleLogout() {
+    this.isLoggedIn = false;
+    this.username = '';
+    this.password = '';
+  }
+
   render() {
     return html`
       <main>
         ${this.isLoggedIn
           ? html`<h3>Welcome, ${this.username}</h3>
-              <lion-button>Logout</lion-button>`
+              <lion-button @click="${this._handleLogout}">Logout</lion-button>`
           : html`<h3>Authentication</h3>
               <p>
                 ${this.isRegisterScreen
