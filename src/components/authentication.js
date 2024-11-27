@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import '@lion/ui/define/lion-input.js';
+import '@lion/ui/define/lion-button.js';
 
 class Authentication extends LitElement {
   static styles = css`
@@ -28,6 +29,10 @@ class Authentication extends LitElement {
       text-decoration: underline;
       padding: 0;
     }
+
+    lion-button {
+      margin-top: 0.5rem;
+    }
   `;
 
   static properties = {
@@ -50,37 +55,67 @@ class Authentication extends LitElement {
     this.errorMessage = '';
   }
 
+  _handleSubmit(e) {
+    e.preventDefault();
+    const username = this.username?.trim();
+    const password = this.password?.trim();
+
+    if (!username || !password) {
+      this.errorMessage = 'All fields are required.';
+      return;
+    }
+
+    if (this.isRegisterScreen) {
+      localStorage.setItem('user', JSON.stringify({ username }));
+      this.errorMessage = '';
+      this.isLoggedIn = true;
+    } else {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && user.username === username) {
+        this.errorMessage = '';
+        this.isLoggedIn = true;
+      } else {
+        this.errorMessage = 'Invalid username or password.';
+      }
+    }
+  }
+
   render() {
     return html`
       <main>
-        <h3>Authentication</h3>
-        <p>
-          ${this.isRegisterScreen
-            ? 'Please register to continue'
-            : 'Please login to continue'}
-        </p>
-        <form>
-          <lion-input label="Username" type="text"></lion-input>
-          <lion-input label="Password" type="password"></lion-input>
-        </form>
-        <p>
-          ${this.isRegisterScreen
-            ? html`
-                Already have an account? Click
-                <button class="toggle" @click="${this._toggleRegister}">
-                  here
-                </button>
-                to login.
-              `
-            : html`
-                Don't have an account? Click
-                <button class="toggle" @click="${this._toggleRegister}">
-                  here
-                </button>
-                to register.
-              `}
-        </p>
-        <p></p>
+        ${this.isLoggedIn
+          ? html`<h3>Welcome, ${this.username}</h3>`
+          : html`<h3>Authentication</h3>
+              <p>
+                ${this.isRegisterScreen
+                  ? 'Please register to continue'
+                  : 'Please login to continue'}
+              </p>
+              <form>
+                <lion-input label="Username" type="text"></lion-input>
+                <lion-input label="Password" type="password"></lion-input>
+                <lion-button onClick="${this._handleSubmit}"
+                  >Submit</lion-button
+                >
+              </form>
+              <p>
+                ${this.isRegisterScreen
+                  ? html`
+                      Already have an account? Click
+                      <button class="toggle" @click="${this._toggleRegister}">
+                        here
+                      </button>
+                      to login.
+                    `
+                  : html`
+                      Don't have an account? Click
+                      <button class="toggle" @click="${this._toggleRegister}">
+                        here
+                      </button>
+                      to register.
+                    `}
+              </p>
+              <p></p>`}
       </main>
     `;
   }
