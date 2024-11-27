@@ -92,11 +92,22 @@ class Authentication extends LitElement {
                   : 'Please login to continue'}
               </p>
               <form>
-                <lion-input label="Username" type="text"></lion-input>
-                <lion-input label="Password" type="password"></lion-input>
-                <lion-button onClick="${this._handleSubmit}"
-                  >Submit</lion-button
-                >
+                <lion-input
+                  label="Username"
+                  type="text"
+                  @model-value-changed="${e => {
+                    this.username = e.target.modelValue;
+                  }}"
+                ></lion-input>
+                <lion-input
+                  label="Password"
+                  name="password"
+                  type="password"
+                  @model-value-changed="${e => {
+                    this.password = e.target.modelValue;
+                  }}"
+                ></lion-input>
+                <lion-button @click="${this._handleSubmit}">Submit</lion-button>
               </form>
               <p>
                 ${this.isRegisterScreen
